@@ -1,0 +1,36 @@
+梳理一下wire
+server.ProviderSet：
+NewGRPCServer(c *conf.Server, greeter *service.GreeterService, logger log.Logger) *grpc.Server
+NewHTTPServer(c *conf.Server, greeter *service.GreeterService, logger log.Logger) *http.Server
+
+
+
+________________________________________
+data.ProviderSet:
+NewData(c *conf.Data, logger log.Logger) (*Data, func(), error)
+NewGreeterRepo(data *Data, logger log.Logger) biz.GreeterRepo
+
+
+
+_________________________________
+biz.ProviderSet:
+NewGreeterUsecase(repo GreeterRepo, logger log.Logger) *GreeterUsecase
+
+
+
+__________________________________________
+service.ProviderSet:
+NewGreeterService(uc *biz.GreeterUsecase) *GreeterService
+
+————————
+newApp
+newApp(logger log.Logger, gs *grpc.Server, hs *http.Server) *kratos.App
+
+
+
+===========
+所以一共需要
+conf.Data
+conf.Server
+log.Logger
+跟生成需要的函数入参是一样的，神奇吧
